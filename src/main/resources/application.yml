@@ -1,0 +1,74 @@
+com:
+  cunjunwang:
+#    activeMQ:
+#      shanghai:
+#        bus:
+#          query:
+#            busLinePersistException: bus.line.persist.exception.dev
+#            busStationPersistException: bus.station.persist.exception.dev
+    shanghai:
+      bus:
+        query:
+          getSidUrl: https://shanghaicity.openservice.kankanews.com/public/bus/get
+          getStationsUrl: https://shanghaicity.openservice.kankanews.com/public/bus/mes/sid/%s?stoptype=%s
+          getStopUrl: https://shanghaicity.openservice.kankanews.com/public/bus/Getstop
+mybatis:
+  mapperLocations: classpath:/mappers/*.xml
+  typeAliasesPackage: com.cunjunwang.shanghai.bus.query.dao
+remote:
+  connectTimeout: 5000
+  maxConnectPerRoute: 100
+  maxTotalConnect: 200
+  readTimeout: 30000
+server:
+  port: 8101
+
+spring:
+  activemq:
+    in-memory: true
+    packages:
+      trust-all: true
+    password: admin
+    user: admin
+    pool:
+      enabled: true
+      expiry-timeout: 0
+      idle-timeout: 30000
+      max-connections: 20
+    broker-url: tcp://localhost:61616
+  application:
+    name: shanghai-transportation
+  #  datasource:
+  #    driver-class-name: com.mysql.jdbc.Driver
+  #    password: 199631
+  #    url: jdbc:mysql://39.108.137.115:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=false
+  #    username: root
+  jms:
+    listener:
+      acknowledge-mode: CLIENT
+      concurrency: 5
+      max-concurrency: 20
+swagger:
+  host: localhost:${server.port}
+
+#数据连接池配置
+datasource:
+  druid:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    initialSize: 5
+    maxActive: 20
+    maxEvictableIdleTimeMillis: 700000
+    maxOpenPreparedStatements: -1
+    maxWait: 3000
+    minEvictableIdleTimeMillis: 400000
+    minIdle: 5
+    password: 199631
+    poolPreparedStatements: false
+    timeBetweenEvictionRunsMillis: 60000
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://39.108.137.115:3306/test?useUnicode=true&serverTimezone=Asia/Shanghai&characterEncoding=utf8&autoReconnect=true&useSSL=false&allowMultiQueries=true
+    username: root
+#打印sql日志
+logging:
+  level:
+    com.cunjunwang.shanghai.transportation.dao.*:  debug
